@@ -3,8 +3,7 @@
 #include <unistd.h>
 
 int main(const int argc, const char * argv[]) {
-
-  const char * myargs[3];
+ const char * myargs[3];
 
   if (strcmp(argv[1],"-s") == 0) {
 
