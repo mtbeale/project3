@@ -1,51 +1,41 @@
-#include <cstdlib>
 #include <iostream>
-#include <unistd.h>
+#include <vector>
+#include <string.h>
+#include <cstdlib>
 #include <fcntl.h>
-#include <cstring>
-#include <cerrno>
-
+#include <unistd.h>
+#include <fstream>
+#include <getopt.h>
+#include <stdio.h>
 
 using namespace std;
 
-int main(const int argc, const char * argv[]) {
-  int num = 0;
-  int cnum = 0;
-  int lines = 0;
-  int words = 0;
-  int bytes = 0;
-  int n = 0;
+int main(int argc, char * argv[]) {
 
-  const int BUFF_SIZE = 1024;
-  char buffer[BUFF_SIZE];
+  vector <string> lines;
+  ifstream in;
 
-  const char * filename;
-  int fd;
-
+  int num = 10;
   int opt;
 
-  /*  while ((opt = getopt(argc , argv[], "fc:n:")) != -1)  {
-    switch (opt) {
-
-    case 'f':
-
-      break;
-    case 'c':
-      if(optarg) cnum = atoi(optarg);
-      break;
-    case 'n':
-      if (optarg) num = atoi(optarg);
-      break;
+  while ((opt = getopt(argc,argv,"fc:n:")) != -1) {
+      switch(opt) {
+      case 'f':
+        break;
+      case 'c':
+        break;
+      case 'n':
+        num= atoi(optarg);
+        break;
+      }
+    }
+  for (int i = optind; i < argc; i++) {
+    in.open(argv[i]);
+    for (string line; getline(in,line);) {
+          lines.push_back(line);
     }
   }
-  */
-  for (int i = 1; i < argc; i ++) {
-    filename = argv[i];
-    fd = open(filename,O_RDONLY);
-    if (fd != -1) {
-    while ((n = read(fd, buffer, BUFF_SIZE)) > 0) {
-      if (write(STDOUT_FILENO, buffer, 5) == -1) perror("write");
+  for (int i = 0 ;  i < num; i++) {
+    cout << lines[i] << endl;
     }
   }
-}
-}
