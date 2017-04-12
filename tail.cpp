@@ -35,7 +35,8 @@ int main(int argc, char * argv[]) {
           lines.push_back(line);
     }
   }
-  for (int i = 0 ;  i < num; i++) {
+ for (size_t i = min(lines.size(),size_t(10));  i <lines.size();  i++) {
     cout << lines[i] << endl;
     }
   }
+
