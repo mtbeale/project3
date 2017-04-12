@@ -1,37 +1,43 @@
 #include <iostream>
+#include <vector>
+#include <string.h>
 #include <cstdlib>
-#include <cstring>
-#include <cerrno>
-#include <unistd.h>
 #include <fcntl.h>
+#include <unistd.h>
+#include <fstream>
+#include <getopt.h>
+#include <stdio.h>
 
-using std::cout;
-using std::endl;
+using namespace std;
 
-int main(const int argc, const char * argv []) {
-  const char * filename;
-  int fd;
-  const int BUFF_SIZE = 1024;
-  char buffer [BUFF_SIZE];
-  int n = 0;
+int main(int argc, char * argv[]) {
 
-for (int i = 1; i < argc; i++) {
-  filename = argv[i];
-  fd = open(filename,O_RDONLY);
+  vector <string> lines;
+  ifstream in;
 
-  if ((strcmp(argv[i],"-") == 0) || (argc == 1 )) {
-    while ((n = read(STDIN_FILENO, buffer, BUFF_SIZE)) > 0) {
-      if (write(STDOUT_FILENO, buffer, n) == -1)
-        perror("write");
-      num++;
+  int num = 10;
+  int opt;
+
+  while ((opt = getopt(argc,argv,"fc:n:")) != -1) {
+      switch(opt) {
+      case 'f':
+        break;
+      case 'c':
+        break;
+      case 'n':
+        num= atoi(optarg);
+        break;
+      }
+    }
+  for (int i = optind; i < argc; i++) {
+    in.open(argv[i]);
+    for (string line; getline(in,line);) {
+          lines.push_back(line);
     }
   }
-  else if (fd != -1) {
-    while ((n = read(fd, buffer, BUFF_SIZE)) > 0) {
-      if (write(STDOUT_FILENO,buffer,n) == -1)
-        perror("write");
+  for (int i = 0 ;  i < num; i++) {
+    cout << lines[i] << endl;
     }
   }
- }
-}
+
 
