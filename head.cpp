@@ -18,12 +18,8 @@ int main(int argc, char * argv[]) {
   int num = 10;
   int opt;
 
-  while ((opt = getopt(argc,argv,"fc:n:")) != -1) {
+  while ((opt = getopt(argc,argv,"n:")) != -1) {
       switch(opt) {
-      case 'f':
-        break;
-      case 'c':
-        break;
       case 'n':
         num= atoi(optarg);
         break;
